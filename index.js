@@ -1,13 +1,18 @@
-const {MongoClient}=require("mongodb");
-const url="mongodb://localhost:27017";
-const client=new MongoClient(url);
+const dbConnect=require("./mongodb");
+// --------------------------------------------get data with promises-----------------------------
+// dbConnect().then((resp)=>{
+//     resp.find({}).toArray().then((data)=>{
+//         console.log(data)
+//     })
+// })
 
-async function getData(){
-    let result=await client.connect();
-    let db=result.db("e-com");
-    let collection=db.collection("products");
-    let response=await collection.find({}).toArray();
-    console.log(response)
+// ============================================get data with asyn await=============================
+
+const main=async ()=>{
+    let connect=await dbConnect();
+    let data=await connect.find({}).toArray();
+    console.log(data);
+    
 }
 
-getData();
+main();
